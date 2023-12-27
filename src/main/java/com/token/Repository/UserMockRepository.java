@@ -17,6 +17,7 @@ public class UserMockRepository {
 		user.setFirstName("John");
 		user.setLastName("Doe");
 		user.setRole("ROLE_USER");
+		user.setPassowrd("Random#@1");
 		users.put("johnDoe", user);
 	}
 	
