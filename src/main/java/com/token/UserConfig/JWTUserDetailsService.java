@@ -15,8 +15,9 @@ public class JWTUserDetailsService implements UserDetailsService{
 	UserMockRepository mockRepository;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+		mockRepository.InMemoryUserRepository();
 		User findUserByUserName = mockRepository.findUserByUserName(username);
+		
 		if(findUserByUserName == null) {
 			throw new UsernameNotFoundException("User not present in DB");
 		}

@@ -60,7 +60,7 @@ public class JWTFilter extends OncePerRequestFilter{
 		}else {
 			System.out.println("The Token is Invalid or null");
 		}
-		
+		filterChain.doFilter(request, response);
 	}
 
 	

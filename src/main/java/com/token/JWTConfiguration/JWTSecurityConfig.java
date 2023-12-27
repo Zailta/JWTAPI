@@ -24,11 +24,14 @@ import com.token.UserConfig.JWTUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class JWTSecurityConfig {
-	@Autowired
-	JWTEntryPoint entryPoint;
-	@Autowired
-	@Lazy
-	JWTFilter filter;
+	 @Autowired
+	    private JWTEntryPoint jwtEntryPoint;
+
+	    @Autowired
+	    private JWTFilter jwtFilter;
+
+
+	    
 	
 	@Bean
 	public UserDetailsService getUserDetailsService() {
@@ -53,12 +56,13 @@ public class JWTSecurityConfig {
 		
 		MvcRequestMatcher.Builder builder = new MvcRequestMatcher.Builder(introspector);
 		httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize->{
-			authorize.requestMatchers(builder.pattern("/api/accessToken")).permitAll().anyRequest().authenticated();
+			authorize.requestMatchers(builder.pattern("/api/**")).permitAll().anyRequest().authenticated();
 		}).exceptionHandling(exception->{
-			exception.authenticationEntryPoint(entryPoint);
+			exception.authenticationEntryPoint(jwtEntryPoint);
 		}).sessionManagement(session->{
 			session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		}).addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+		}).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		
 		return httpSecurity.build();
 		
 	}
